@@ -36,5 +36,6 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2")
     runtime 'mysql:mysql-connector-java:' + mySqlConnectorVersion
+    testCompile "org.mockito:mockito-core:1.+"
     testCompile("junit:junit")
 }

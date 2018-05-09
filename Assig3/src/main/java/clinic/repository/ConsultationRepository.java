@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ConsultationRepository extends JpaRepository<Consultation, Integer>{
     List<Consultation> findAllByUser(User user);
-    List<Patient> findAllByPatient(Patient patient);
+    List<Consultation> findAllByPatient(Patient patient);
     Consultation findById(int id);
     void deleteById(int id);
 
