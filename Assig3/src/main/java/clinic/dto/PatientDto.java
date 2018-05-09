@@ -1,27 +1,34 @@
-package clinic.entity;
+package clinic.dto;
 
-import javax.persistence.*;
-import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
 
-@Entity
-@Table(name = "patient")
-public class Patient {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+
+public class PatientDto {
     private int id;
 
+    @Pattern(regexp = "^[\\p{L} .'-]+$", message = "The name should contain only letters!")
     private String name;
-    private String cardNb;
-    private String pnc;
-    private String address;
-    private Date birthDate;
 
-    public Patient() {
+    private String cardNb;
+
+    @Pattern(regexp = "[0-9]+", message = "The PNC should contain only numbers!")
+    private String pnc;
+
+    private String address;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    private LocalDate birthDate;
+
+    public PatientDto() {
     }
 
-    public Patient(String name, String cardNb, String pnc, String address, Date birthDate) {
+    public PatientDto(int id, @Pattern(regexp = "^[\\p{L} .'-]+$", message = "The name should contain only letters!") String name, String cardNb, @Pattern(regexp = "[0-9]+", message = "The PNC should contain only numbers!") String pnc, String address, LocalDate birthDate) {
+        this.id = id;
         this.name = name;
         this.cardNb = cardNb;
         this.pnc = pnc;
@@ -69,11 +76,11 @@ public class Patient {
         this.address = address;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 }

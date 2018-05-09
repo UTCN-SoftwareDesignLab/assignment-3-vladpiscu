@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Users</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+        td {
+            width: 200px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/home-secretary}">Back</a>
+
+<h1>Users:</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Card number</th>
+        <th>PNC</th>
+        <th>Address</th>
+        <th>Birthdate</th>
+    </tr>
+    </thead>
+    <tr th:each="patient : ${ patients }">
+        <td th:text="${ patient.id }" >ID</td>
+        <td th:text="${ patient.name }">Name</td>
+        <td th:text="${ patient.cardNb }">Card number</td>
+        <td th:text="${ patient.pnc }" >Pnc</td>
+        <td th:text="${ patient.address }">Address</td>
+        <td th:text="${ patient.birthDate }">Birthdate</td>
+    </tr>
+    <tbody>
+
+    </tbody>
+</table>
+
+
+<hr/>
+
+
+<form th:action="@{/crud-patients/create-patient}" th:object="${newPatient}" method="post">
+
+    <legend><b>Add user</b></legend>
+    Name: <input type="text" id="name" th:field="${newPatient.name}"/>
+    CardNb: <input type="text" id="cardNb" th:field="${newPatient.cardNb}"/>
+    Pnc: <input type="text" id="pnc" th:field="${newPatient.pnc}"/>
+    Address: <input type="text" id="address" th:field="${newPatient.address}"/>
+    Date: <input type="date" th:field="${newPatient.birthDate}" />
+    <input type="submit" class="button" name="create" value="Create" />
+    <table th:if="${#fields.hasErrors()}">
+            <thead>
+            <tr>
+                <th>Errors</th>
+            </tr>
+            </thead>
+            <tr th:each="error : ${ errors }">
+                <td th:text="${ error }">Error</td>
+            </tr>
+            <tbody>
+
+            </tbody>
+        </table>
+</form>
+
+<hr/>
+
+<form th:action="@{/crud-patients/update-delete-patient}" th:object="${patientDto}" method="post">
+    <legend><b>Update or delete patient:</b></legend>
+    Id:
+    <select name="id" id="id" >
+        <option th:each="patient : ${patients}" th:field="${patientDto.id}" th:value="${patient.id}" th:text="${patient.id}"></option>
+    </select>
+    Name: <input type="text" id="name" th:field="${patientDto.name}"/>
+    CardNb: <input type="text" id="cardNb" th:field="${patientDto.cardNb}"/>
+    Pnc: <input type="text" id="pnc" th:field="${patientDto.pnc}"/>
+    Address: <input type="text" id="address" th:field="${patientDto.address}"/>
+    Date: <input type="date" th:field="${patientDto.birthDate}" />
+    <input type="submit" class="button" name="action" value="update" />
+    <input type="submit" class="button" name="action" value="delete" />
+    <table th:if="${#fields.hasErrors()}">
+        <thead>
+        <tr>
+            <th>Errors</th>
+        </tr>
+        </thead>
+        <tr th:each="error : ${ errors }">
+            <td th:text="${ error }">Error</td>
+        </tr>
+        <tbody>
+
+        </tbody>
+    </table>
+</form>
+
+
+
+
+</body>
+</html>

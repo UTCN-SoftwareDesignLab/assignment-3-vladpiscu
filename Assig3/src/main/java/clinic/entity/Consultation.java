@@ -18,6 +18,9 @@ public class Consultation {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Patient patient;
 
+    public Consultation() {
+    }
+
     public Consultation(Date consultationDate, User user, Patient patient) {
         this.consultationDate = consultationDate;
         this.user = user;
