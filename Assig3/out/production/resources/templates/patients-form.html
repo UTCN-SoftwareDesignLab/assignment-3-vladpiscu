@@ -83,7 +83,7 @@
     <legend><b>Update or delete patient:</b></legend>
     Id:
     <select name="id" id="id" >
-        <option th:each="patient : ${patients}" th:field="${patientDto.id}" th:value="${patient.id}" th:text="${patient.name}"></option>
+        <option th:each="patient : ${patients}" th:field="${patientDto.id}" th:value="${patient.id}" th:text="${patient.id}"></option>
     </select>
     Name: <input type="text" id="name" th:field="${patientDto.name}"/>
     CardNb: <input type="text" id="cardNb" th:field="${patientDto.cardNb}"/>

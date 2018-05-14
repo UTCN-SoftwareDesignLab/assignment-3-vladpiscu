@@ -4,6 +4,7 @@ import clinic.entity.Patient;
 import clinic.entity.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -12,6 +13,7 @@ public class ConsultationDto {
     private String diagnostic;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Future(message = "Can't make a consultation in the past!")
     @NotNull
     private LocalDate consultationDate;
 

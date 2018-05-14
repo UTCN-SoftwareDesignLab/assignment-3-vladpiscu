@@ -2,8 +2,6 @@ package clinic.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "patient")

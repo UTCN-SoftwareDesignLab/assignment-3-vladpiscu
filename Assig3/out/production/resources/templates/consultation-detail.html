@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="js/consultation-detail.js"></script>
+
+    <title>Consultations:</title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+        td {
+            width: 200px;
+        }
+
+        th {
+            text-align: left;
+        }
+
+        table, th, td {
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body onload = "connect()" onunload = "disconnect()">
+<a th:href="@{/home-doctor}">Back</a>
+
+<h1>Details of consultations:</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Diagnostic</th>
+        <th>Consultation date</th>
+        <th>Doctor</th>
+        <th>Patient</th>
+    </tr>
+    </thead>
+    <tr th:each="consultation : ${ consultations }">
+        <td th:text="${ consultation.id }" >ID</td>
+        <td th:text="${ consultation.diagnostic }">Name</td>
+        <td th:text="${ consultation.consultationDate }">Consultation date</td>
+        <td th:text="${ consultation.user.username }" >Doctor</td>
+        <td th:text="${ consultation.patient.name }">Patient</td>
+    </tr>
+    <tbody>
+
+    </tbody>
+</table>
+
+
+<hr/>
+
+
+<form th:action="@{/details-consultation/update-details}" th:object="${consultationDto}" method="post">
+    <legend><b>Update the details of the consultation:</b></legend>
+    Id:
+    <select name="id" id="id" >
+        <option th:each="consultation : ${consultations}" th:field="${consultationDto.id}" th:value="${consultation.id}" th:text="${consultation.id}"></option>
+    </select>
+    Diagnostic: <input type="text" id="detail" th:field="${consultationDto.diagnostic}" />
+    <input type="submit" class="button" name="action" value="update" />
+    <table th:if="${#fields.hasErrors()}">
+        <thead>
+        <tr>
+            <th>Errors</th>
+        </tr>
+        </thead>
+        <tr th:each="error : ${ errors }">
+            <td th:text="${ error }">Error</td>
+        </tr>
+        <tbody>
+
+        </tbody>
+    </table>
+</form>
+
+<hr/>
+
+<form>
+     <output type = "text" id = "result" name="result"/>
+</form>
+
+</body>
+</html>

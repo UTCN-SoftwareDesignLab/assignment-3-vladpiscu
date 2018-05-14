@@ -24,6 +24,16 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
+    public List<Consultation> findAll() {
+        return consultationRepository.findAll();
+    }
+
+    @Override
+    public Consultation findById(int id) {
+        return consultationRepository.findById(id);
+    }
+
+    @Override
     public List<Consultation> findAllByPatient(Patient patient) {
         return consultationRepository.findAllByPatient(patient);
     }

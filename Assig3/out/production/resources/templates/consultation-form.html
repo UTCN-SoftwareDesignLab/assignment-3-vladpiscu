@@ -3,7 +3,11 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Users</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/js/consultation-form.js"></script>
+    <title>Consultations</title>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <style>
         td {
@@ -23,7 +27,7 @@
 <body>
 <a th:href="@{/home-secretary}">Back</a>
 
-<h1>Users:</h1>
+<h1>Consultations:</h1>
 
 <table>
     <thead>
@@ -51,20 +55,21 @@
 <hr/>
 
 
+
 <form th:action="@{/crud-consultations/create-consultation}" th:object="${newConsultation}" method="post">
 
     <legend><b>Add consultation</b></legend>
-    Date: <input type="date" th:field="${newConsultation.consultationDate}" />
-    <select name="doctorId" id="doctorId" >
-            <option th:each="doctor : ${doctors}" th:field="${newConsultation.user}" th:value="${doctor.username}" th:text="${doctor.username}"></option>
-        </select>
-    <select name="patientId" id="patientId" >
-            <option th:each="patient : ${patients}" th:field="${newConsultation.patient}" th:value="${patient.name}" th:text="${patient.name}"></option>
+    Date: <input type="date" th:name="selectedDate" />
+    <input type="hidden" th:name="consultationDateCreate" th:field="${newConsultation.consultationDate}" />
+    <input type="submit" class="button" name="select" value="Select date" />
+    <select  name="user" id="user" >
+            <option th:each="user : ${doctors}" th:field="${newConsultation.user}" th:value="${user.id}" th:text="${user.username}"></option>
     </select>
-    Pnc: <input type="text" id="pnc" th:field="${newConsultation.pnc}"/>
-    Address: <input type="text" id="address" th:field="${newConsultation.address}"/>
+    <select name="patient" id="patient" >
+            <option th:each="patient : ${patients}" th:field="${newConsultation.patient}" th:value="${patient.id}" th:text="${patient.name}"></option>
+    </select>
 
-    <input type="submit" class="button" name="create" value="Create" />
+    <input th:disabled="${!isSelected}" type="submit" class="button" name="create" value="Create" />
     <table th:if="${#fields.hasErrors()}">
             <thead>
             <tr>
@@ -82,19 +87,26 @@
 
 <hr/>
 
-<form th:action="@{/crud-patients/update-delete-patient}" th:object="${patientDto}" method="post">
-    <legend><b>Update or delete patient:</b></legend>
+
+
+<form th:action="@{/crud-consultations/update-delete-consultation}" th:object="${consultationDto}" method="post">
+    <legend><b>Update or delete consultation:</b></legend>
     Id:
     <select name="id" id="id" >
-        <option th:each="patient : ${patients}" th:field="${patientDto.id}" th:value="${patient.id}" th:text="${patient.id}"></option>
+        <option th:each="consultation : ${consultations}" th:field="${consultationDto.id}" th:value="${consultation.id}" th:text="${consultation.id}"></option>
     </select>
-    Name: <input type="text" id="name" th:field="${patientDto.name}"/>
-    CardNb: <input type="text" id="cardNb" th:field="${patientDto.cardNb}"/>
-    Pnc: <input type="text" id="pnc" th:field="${patientDto.pnc}"/>
-    Address: <input type="text" id="address" th:field="${patientDto.address}"/>
-    Date: <input type="date" th:field="${patientDto.birthDate}" />
-    <input type="submit" class="button" name="action" value="update" />
+    Date: <input type="date" th:name="selectedDate"  />
+     <input type="hidden" th:name="consultationDate" th:field="${consultationDto.consultationDate}" />
+        <input type="submit" class="button" name="select" value="Select date" />
+    <select name="user" id="user" >
+            <option th:each="doctor : ${doctors}" th:field="${consultationDto.user}" th:value="${doctor.id}" th:text="${doctor.username}"></option>
+    </select>
+    <select name="patient" id="patient" >
+            <option th:each="patient : ${patients}" th:field="${consultationDto.patient}" th:value="${patient.id}" th:text="${patient.name}"></option>
+    </select>
+    <input type="submit" th:disabled="${!isSelectedUpdate}" class="button" name="action" value="update" />
     <input type="submit" class="button" name="action" value="delete" />
+    <input type="submit" class="button" name="action" value="check in" />
     <table th:if="${#fields.hasErrors()}">
         <thead>
         <tr>

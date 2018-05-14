@@ -2,9 +2,11 @@ package clinic.mapper;
 
 import clinic.dto.ConsultationDto;
 import clinic.entity.Consultation;
+import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 
+@Component
 public class ConsultationMapper {
     public Consultation toConsultation(ConsultationDto consultationDto){
         return new Consultation(Date.valueOf(consultationDto.getConsultationDate()),

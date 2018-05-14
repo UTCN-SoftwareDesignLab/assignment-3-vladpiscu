@@ -1,13 +1,9 @@
 package clinic;
 
 import clinic.dto.PatientDto;
-import clinic.dto.UserDto;
 import clinic.entity.Patient;
-import clinic.entity.User;
 import clinic.mapper.PatientMapper;
-import clinic.mapper.UserMapper;
 import clinic.service.PatientService;
-import clinic.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

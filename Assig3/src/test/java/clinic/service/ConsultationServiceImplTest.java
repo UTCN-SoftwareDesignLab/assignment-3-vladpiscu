@@ -5,10 +5,8 @@ import clinic.entity.Consultation;
 import clinic.entity.Patient;
 import clinic.entity.User;
 import clinic.repository.ConsultationRepository;
-import clinic.repository.PatientRepository;
 import clinic.repository.UserRepository;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.sql.Date;
